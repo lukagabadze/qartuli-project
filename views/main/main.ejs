@@ -1,0 +1,115 @@
+<%- include('./partials/header.ejs') %>
+
+<link rel="stylesheet" href="../main/mainStyles.css">
+<link rel="stylesheet" href="../main/folderFormStyles.css">
+
+
+<div class="folder-div">
+    <div class="controls">
+        <button class="add-folder-button">+ Add Folder</button>
+        <div id='overlay'></div>
+        <div id="folder-modal">
+            <form id='folder-form'>
+                <p class='form-title'>Add a folder</p>
+
+                <label for="name">Name</label>
+                <input type="text" name='name' spellcheck="false" autocomplete="off" pattern="[^()/><\][\\\x22,;|]+">
+
+                <div class='folder-error'></div>
+                <button>Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="content">
+        <% folders.forEach(folder => { %>
+            <a href="/folder/<%= folder._id %>" class='folder-anchor'>
+                <% if(user.isTeacher) {%>
+                    <h4 style='text-align: center'><%= folder.student_name %></h4>
+                <% } %>
+                <div class="folder" id='<%= folder._id %>' onclick='folderClick("<%= folder._id %>")'>
+                    <div class="folder-svg"><img src="/main/svg/folder2.svg"></div>
+                    <div class="folder-name"><%= folder.name %></div>
+                </div>
+            </a>
+        <% }) %>
+    </div>
+</div>
+
+<script>
+
+    function folderClick(folderId) {
+        location.assign('/folder/' + folderId);
+    }
+
+    const folderError = document.getElementsByClassName('folder-error')[0];
+
+    const addFolderButton = document.getElementsByClassName('add-folder-button')[0];
+    const overlay = document.getElementById('overlay');
+    const folderModal = document.getElementById('folder-modal')
+    addFolderButton.addEventListener('click', (e) => { folderModalControl('active') })
+    overlay.addEventListener('click', (e) => { folderModalControl('') });
+
+    function folderModalControl(state) {
+        overlay.className = state;
+        folderModal.className = state;
+        folderError.innerHTML = '';
+    }
+
+    const folderForm = document.getElementById('folder-form');
+    const content = document.getElementById('content');
+    folderForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const folderName = folderForm.name.value;
+        
+        folderError.innerHTML = '';
+
+        const res = await fetch('./add-folder', {
+            method: 'POST',
+            body: JSON.stringify({folderName}),
+            headers: {'Content-Type': 'application/json'},
+        })
+
+        const data = await res.json();
+        if(data.errors){
+            folderError.innerHTML = data.errors.name;
+            return;
+        }
+        if(data.folder){
+            folderForm.name.value = '';
+
+            const folderAnchor = document.createElement('a');
+            folderAnchor.href = '/folder/' + data.folder._id;
+            folderAnchor.className = 'folder-anchor';
+
+            const folderDiv = document.createElement('div');
+            folderDiv.className='folder';
+            folderDiv.id = data.folder._id;
+
+            const folderSvgDiv = document.createElement('div');
+            folderSvgDiv.className='folder-svg';
+
+            const folderImg = document.createElement('img');
+            folderImg.src='main/svg/folder2.svg';
+            
+            const folderNameDiv = document.createElement('div');
+            folderNameDiv.className = 'folder-name';
+            folderNameDiv.innerText = data.folder.name;
+            
+            folderSvgDiv.append(folderImg);
+            folderDiv.append(folderSvgDiv);
+            folderDiv.append(folderNameDiv);
+            folderAnchor.append(folderDiv)
+            content.prepend(folderAnchor);
+  
+            folderModalControl('');
+        }
+    })
+
+    <% if(user.isTeacher) {%>
+        addFolderButton.style.display = 'none';
+    <% } %>
+
+</script>
+
+<%- include('./partials/footer.ejs') %>

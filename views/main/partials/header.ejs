@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="../main/headerFooterStyles.css">
+    </head>
+
+    <body>
+        <header>
+            <div class='left-nav logo'>
+                <a href='../'>ქართული</a>
+            </div>
+            <div class="right-nav">
+                <% if(user) {%>
+                    <a class='username'><%= user.username %></a>
+                    <a href='/logout' class='logout-link'>Logout</a>
+                    <!-- <button class='logout'>Logout</button> -->
+                <% }else{ %>
+                    <a href='/login' class='login-link'>Login</a>
+                    <a href='/signup' class='signup-link'>Signup</a>
+                    <!-- <button class='login'><a href='/login'>Login</a></button>
+                    <button class="signup">Signup</button> -->
+                <% } %>
+            </div>
+        </header>

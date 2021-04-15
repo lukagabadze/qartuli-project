@@ -1,0 +1,108 @@
+<%- include('partials/header.ejs') %>
+
+<link rel="stylesheet" href="../main/folderStyles.css">
+
+
+<div id='content' class='bg-blue-700'>
+
+    <h1 style='text-align: center;'><%= folder.name %></h1>
+    
+    
+    <div id='student-teacher'>
+        <div class='side-div' id='student-side'>
+
+            <div id='student-image-list'>
+                <% folder.student_files.forEach((fileName) => { %>
+                    <img src="../images/<%= folder.student_name %>/<%= fileName %>">
+                <% }) %>
+            </div>
+
+            <form id='student-form'>
+                <label for="input-files-student"><img class='files-add' src="/main/svg/plus.svg"></label>
+                <input type="file" name='files' class='input-files' id='input-files-student' enctype='mulitpart/form-data' multiple>
+            </form>
+        </div>
+        
+        <div class="line-div"></div>
+        
+        <div class='side-div' id='teacher-side'>
+            <div class='controls'>
+                
+            </div>
+            
+            <div id='teacher-image-list'>
+                <% folder.teacher_files.forEach((fileName) => { %>
+                    <img src="../images/<%= folder.student_name %>/<%= fileName %>">
+                <% }) %>
+            </div>
+                
+            <form id='teacher-form'>
+                <label for="input-files-teacher"><img class='files-add' src="/main/svg/plus.svg"></label>
+                <input type="file" name='files' class='input-files' id='input-files-teacher' enctype='mulitpart/form-data' multiple>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const identity = (<%= user.isTeacher %> ? 'teacher' : 'student');
+
+    // const imgExists = (imageUrl) => {
+    //     var http = new XMLHttpRequest();
+    //     http.open('HEAD', imageUrl, false);
+    //     http.send();
+    //     return http.status != 404;
+    // }
+
+    const studentForm = document.getElementById('student-form');
+    const teacherForm = document.getElementById('teacher-form')
+    const postFilesBoy = async (e) => {
+        const files = (identity==='teacher' ? teacherForm.files.files : studentForm.files.files);
+        
+        // console.log(files);
+
+        let formData = new FormData();
+        formData.append('folderName', '<%= folder.name %>');
+        formData.append('folderId', '<%= folder._id %>');
+        formData.append('studentName', '<%= folder.student_name %>')
+        
+        let studentDataFiles = new FormData(studentForm);
+        let teacherDataFiles = new FormData(teacherForm);
+
+        if(identity==='student'){
+            for(let pair of studentDataFiles.entries()){
+                formData.append(pair[0], pair[1]);
+            }
+        }else{
+            for(let pair of teacherDataFiles.entries()){
+                formData.append(pair[0], pair[1]);
+            }
+        }
+    
+        const res = await fetch(`./upload_${identity}`, {
+            method: 'POST',
+            body: formData,
+        })
+        studentForm.reset();
+        teacherForm.reset();
+
+        const data = await res.json();
+        console.log(data);
+
+        const studentDiv = document.getElementById(`${identity}-image-list`);
+        data[`${identity}_files`].forEach((fileName) => {
+            const fileImg = document.createElement('img');
+            fileImg.src = `/images/<%= folder.student_name %>/${fileName}`;
+            studentDiv.append(fileImg);
+        })
+    }
+
+    if(identity==='teacher'){
+        teacherForm.addEventListener('change', postFilesBoy);
+    }else{
+        studentForm.addEventListener('change', postFilesBoy);
+    }
+
+</script>
+
+<%- include('partials/footer.ejs') %>

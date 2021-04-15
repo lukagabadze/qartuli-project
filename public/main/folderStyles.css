@@ -1,0 +1,87 @@
+#content {
+    /* background-color: darkorchid; */
+}
+
+/* .controls {
+    display: flex;
+    align-items: flex-end;
+}
+.controls .delete-button{
+    background-color: red;
+    margin: 10px;
+    margin-left: auto;
+    font-size: 1.5rem;
+    padding-top: 5px; padding-bottom: 5px;
+    padding-right: 15px; padding-left: 15px;
+    border: none;
+    border-radius: 10px;
+}
+.controls .delete-button:hover {
+    color: red;
+    background-color: white;
+    cursor: pointer;
+} */
+
+#student-teacher{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.line-div {
+    position: absolute;
+    left: 50%;
+    background-color: white;
+    width: 10px;
+    height: 100vh;
+    border-radius: 5px;
+}
+
+#student-image-list{
+    display: flex;
+    flex-direction: column;
+}
+#teacher-image-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.side-div{
+    display: flex;
+    flex-direction: column;
+}
+.side-div img {
+    fill: red;
+    width: 25vw;
+    min-width: 200px;
+    /* height: 300px; */
+    border: 5px solid white;
+    border-radius: 5px;
+    padding: 0.5vw;
+    background-size: cover;
+    margin-bottom: 10px;
+    background-color: black;
+}
+.side-div img:hover {
+    background-color: #7D8A89;
+    cursor: pointer;
+}
+
+
+
+.input-files {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.files-add {
+    padding: 4.5vw !important;   
+}
+.files-add:hover {
+    /* background-color:rgb(180, 180, 180); */
+    cursor: pointer;
+}

@@ -1,0 +1,61 @@
+<html>
+    <link rel="stylesheet" href="authStyles.css">
+    <body>
+        <div class="wrapper">
+            <a href='/signup' class='signup-button'>Sign up</a>
+
+            <form>
+                
+                <div class="form-div">
+                    <h1 class='form-title'>Login</h1>
+                    <label for="username">Username</label>
+                    <input type="text" name='username'>
+                    <div class="error" id='username-error'></div>
+                
+                    <label for="password">Password</label>
+                    <input type="password" name='password'>
+                    <div class="error" id='password-error'></div>
+
+                    <button class='submit-button'>Login</button>
+                </div>
+            </form>
+        </div>
+    </body>
+
+    <script>
+        const usernameError = document.getElementById('username-error');
+        const passwordError = document.getElementById('password-error');
+        
+        const form = document.querySelector('form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            usernameError.innerText = '';
+            passwordError.innerText = '';
+
+            const username = form.username.value;
+            const password = form.password.value;
+            
+            try {
+                const res = await fetch('./login', {
+                    method: 'POST',
+                    body: JSON.stringify({username, password}),
+                    headers: {'Content-Type': 'application/json'},
+                })
+
+                const data = await res.json();
+                
+                if(data.err){
+                    usernameError.innerText = data.err.username;
+                    passwordError.innerText = data.err.password;
+                }
+                if(data.user){
+                    location.assign('/');
+                }
+            }
+            catch(err) {
+                console.log(err);
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Langar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:  'Poppins', 'sans-serif', 'Russo One', 'Langar';
+}
+
+body {
+    background-color: rgb(122, 121, 121);
+}
+
+.wrapper {
+    /* background-color: lightpink; */
+    
+}
+
+form {
+    margin-top: 20vh;
+}
+
+.form-div {
+    background-color: rgb(202, 202, 202);
+    /* min-width: 80%; */
+    max-width: 700px;
+    margin: auto;   
+    display: flex;
+    flex-direction: column;
+}
+
+input, label, .error, .form-title {
+    width: 80%;
+    margin: auto;
+}
+input {
+    margin-bottom: 10px;
+}
+
+.submit-button {
+    border: none;
+    margin-top: 50px;
+    font-size: 28px;
+    background-color: darkgreen;
+}
+.submit-button:hover {
+    color: darkgreen;
+    background-color: white;
+    cursor: pointer;
+}
+
+.error {
+    font-weight: 500;
+    font-size: 18px;
+    /* background-color: red;
+    color: white; */
+    color: rgb(214, 0, 0);
+    
+}
+
+.form-title {
+    /* text-align: center; */
+    margin-bottom: 40px;
+    margin-top: 10px;
+}
+
+.signup-button {
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: auto;
+
+    background-color: green;
+    padding-left: 20px; padding-right: 20px;
+    padding-top: 8px; padding-bottom: 8px;
+    
+    font-size: 1.5rem;
+
+    border-radius: 5px;
+}
+
+.signup-button:hover {
+    background-color: white;
+    color: green;
+    cursor: pointer;
+}

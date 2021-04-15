@@ -1,0 +1,110 @@
+.add-folder-button {
+    color: white;
+    font-size: 1.5rem;
+    padding: 5px;
+    padding-left: 15px; padding-right: 15px;
+    background-color:#007369;
+    border: none;
+    border-radius: 6px;
+    margin: 25px;
+    margin-left: 50px;
+    /* transition: 0.2s ease; */
+}
+.add-folder-button:hover {
+    color: #007369;
+    background-color: white;
+    cursor: pointer;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#folder-modal {
+    /* padding: 50px;
+    padding-top: 25px;
+    background-color: rgb(108, 112, 108); */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    transition: opacity 0.3s ease-in-out;
+}
+#folder-modal.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    top: 35%
+}
+.form-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+#folder-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #00a083;
+    height: 200px;
+    border-radius: 10px;
+}
+#folder-form label, input, .folder-error {
+    color: black;
+    width: 90%;
+    margin-left: auto; margin-right: auto;
+    /* margin: auto; */
+    
+}
+#folder-form label{
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: 600;
+}
+#folder-form input {
+    margin-bottom: auto;
+    border: none;
+    height: 12%;
+}
+#folder-form input:focus{
+    outline: none;
+    /* border: 1px solid black; */
+}
+#folder-form .folder-error {
+    margin-bottom: auto;
+    font-weight: 500;
+    font-size: 18px;
+    color: rgb(196, 91, 91);
+}
+
+#folder-form button{
+    top: 100%;
+    width: 450px;
+    border: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-top: 20px;
+    font-size: 25px;
+    color: white;
+    background-color: #007369;
+}
+#folder-form button:hover {
+    color: #007369;
+    background-color: white;
+    cursor: pointer;
+}
+#folder-form button:focus {
+    outline: none;
+}
